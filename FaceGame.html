@@ -1,0 +1,88 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Matching Game</title>
+    <style>
+        #rightside {
+            left: 900px;
+            border-left: 1px solid black;
+        }
+
+        img {
+            position: absolute;
+        }
+
+        div {
+            height: 800px;
+            width: 900px;
+            position: absolute;
+        }
+    </style>
+
+    <script>
+        var numberOffaces = 5;
+        var score = 0;
+
+ 
+
+            function generateFaces() {
+
+                var count = 0;
+                var TheleftSide = document.getElementById("leftSide");
+                var TherightSide = document.getElementById("rightSide");
+
+
+                while (count < numberOffaces) {
+                    var image = document.createElement("img");
+                    image.src = "smile.png";
+                    var top_at = Math.floor((Math.random() * 400));
+                    var left_at = Math.floor((Math.random() * 400));
+                    image.style.position = 'absolute';
+                    image.style.top = top_at + 'px';
+                    image.style.left = left_at + 'px';
+                    TheleftSide.appendChild(image);
+                    count += 1;
+                    var leftSideimage = TheleftSide.cloneNode(true);
+                    leftSideimage.removeChild(leftSideimage.lastChild);
+                    TherightSide.appendChild(leftSideimage);
+                }
+
+                var themain = document.getElementsByTagName("main")[0];
+                TheleftSide.lastChild.onclick = function nextLevel(event) {
+                    while (TheleftSide.firstChild) {
+                        TheleftSide.removeChild(TheleftSide.firstChild);
+                    };
+                    while (TherightSide.firstChild) {
+                        TherightSide.removeChild(TherightSide.firstChild);
+                    };
+                    event.stopPropagation();
+                    numberOffaces += 5;
+                    score += 1;
+                    generateFaces();
+                };
+
+                themain.onclick = function gameOver() {
+                    event.stopPropagation();
+                    alert("Game Over! \n\n your score is: " + score + "!");
+                    themain.onclick = null;
+                    TheleftSide.lastChild.onclick = null;
+                };
+            }
+    </script>
+</head>
+
+<body onload="generateFaces()">
+    <button onClick="window.location.reload();">Restart</button>
+
+    <main>
+        <h1>Old Style Matching Game made w/ JS designed for Desktop play</h1>
+        <p>On your left hand side there is just one extra smiley face. Click on the face and see how many times you can find it! You can restart the game up top. Good luck!</p>
+        <div id="leftSide"></div>
+        <div id="rightSide"></div>
+    </main>
+
+</body>
+
+</html>
