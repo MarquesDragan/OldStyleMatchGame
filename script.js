@@ -3,7 +3,7 @@ var score = 0;
 
 
 
-    function generateFaces() {
+window.onload = function generateFaces() {
 
         var count = 0;
         var TheleftSide = document.getElementById("leftSide");
